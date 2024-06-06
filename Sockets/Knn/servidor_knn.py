@@ -3,7 +3,7 @@ import joblib
 import json
 import numpy as np
 direccion_servidor = "localhost"
-puerto_servidor = 9099
+puerto_servidor = 9090
 
 # Generar el socket
 socket_servidor = socket(AF_INET, SOCK_STREAM)
@@ -28,9 +28,11 @@ while True:
     
     clf = joblib.load('knn.pkl')
 
-    score = clf.score(X_test, y_test)
+    etiquetas = clf.predict(X_test)
 
-    conexion.send(str(score).encode())
+    etiquetas_str = ','.join(map(str, etiquetas))
+
+    conexion.send(etiquetas_str.encode())
 
     print("Conexión cerrada con", direccion_cliente)
     # Cerramos la conexión
