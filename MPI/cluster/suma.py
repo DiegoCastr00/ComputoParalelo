@@ -1,3 +1,4 @@
+
 from mpi4py import MPI
 import numpy as np
 
@@ -32,17 +33,30 @@ def sum_parcial(arr):
     print(f"Resultado total del set: -> {suma}")
     return suma
 
+def gather(data, rank, size):
+    result = sum_parcial(data)
+    comm.send(result, dest=0)
+
+    if rank == 0:
+        results = [result]  # Incluimos el resultado del proceso raíz
+        for i in range(1, size):
+            result_i = comm.recv(source=i)
+            results.append(result_i)
+
+        results = np.array(results)
+        print(f"resultado: {sum(results)}")
 
 comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
 
+data = np.arange(1000)
 
-N_THREADS=5
-splits = np.array_split(np.arange(1000), N_THREADS)
-resutados = []
+if rank == 0:
+    split = scatter(data)
+else:
+    split = comm.recv(source=0)
 
-for split in splits:
-    resutados.append(sum_parcial(split))
+gather(split , rank, size)
 
-print(f"Resultado total de la suma: -> {sum(resutados)}")
+#  mpiexec -n 4 "/usr/bin/python3" suma.py

@@ -57,3 +57,6 @@ else:
     matrizB = comm.recv(source=0)
 
 gather(matrizA, matrizB , rank, size)
+
+
+
