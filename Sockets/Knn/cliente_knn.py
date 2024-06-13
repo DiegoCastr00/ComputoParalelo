@@ -7,7 +7,7 @@ from sklearn.metrics import accuracy_score
 import json
 
 direccion_servidor = "localhost"
-puerto_servidor = 9090
+puerto_servidor = 9999
 
 socket_cliente = socket(AF_INET, SOCK_STREAM)
 socket_cliente.connect((direccion_servidor, puerto_servidor))

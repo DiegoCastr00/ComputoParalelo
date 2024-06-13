@@ -3,7 +3,7 @@ import joblib
 import json
 import numpy as np
 direccion_servidor = "localhost"
-puerto_servidor = 9090
+puerto_servidor = 9999
 
 # Generar el socket
 socket_servidor = socket(AF_INET, SOCK_STREAM)

@@ -25,16 +25,16 @@ def scatter(data):
     return data[0]
 
 
-def sum_parcial(arr):
+def sum_parcial(arr, rank):
     suma = 0
     for n in arr:
         denominador = 2*n + 1
         suma += 1/denominador
-    print(f"Resultado total del set: -> {suma}")
+    print(f"Rank: {rank} Resultado: -> {suma}")
     return suma
 
 def gather(data, rank, size):
-    result = sum_parcial(data)
+    result = sum_parcial(data, rank)
     comm.send(result, dest=0)
 
     if rank == 0:
@@ -50,7 +50,7 @@ comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
 
-data = np.arange(1000)
+data = np.arange(100000)
 
 if rank == 0:
     split = scatter(data)
