@@ -50,7 +50,7 @@ comm = MPI.COMM_WORLD
 size = comm.Get_size()
 rank = comm.Get_rank()
 
-data = np.arange(100000)
+data = np.arange(100000000)
 
 if rank == 0:
     split = scatter(data)
